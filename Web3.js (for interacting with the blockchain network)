@@ -1,0 +1,47 @@
+// blockchain-network.js
+const Web3 = require('web3');
+
+const web3 = new Web3(new Web3.providers.HttpProvider('https://blockchain-network.com'));
+
+const blockchainNetworkContract = new web3.eth.Contract([
+  {
+   "constant": true,
+    "inputs": [],
+    "name": "transactions",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_patientName",
+        "type": "string"
+      },
+      {
+        "name": "_billingDetails",
+        "type": "string"
+      },
+      {
+        "name": "_insuranceClaims",
+        "type": "string"
+      }
+    ],
+    "name": "recordTransaction",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+], '0x...BlockchainNetworkContractAddress...');
+
+async function recordTransaction(patientName, billingDetails, insuranceClaims) {
+  await blockchainNetworkContract.methods.recordTransaction(patientName, billingDetails, insuranceClaims).send({ from: '0x...YourEthereumAddress...' });
+} 

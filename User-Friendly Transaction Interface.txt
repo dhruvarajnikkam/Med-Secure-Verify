@@ -1,0 +1,28 @@
+<!-- transaction-interface.html -->
+<form>
+  <label>Patient Information:</label>
+  <input type="text" id="patient-name" />
+  <br />
+  <label>Billing Details:</label>
+  <input type="text" id="billing-details" />
+  <br />
+  <label>Insurance Claims:</label>
+  <input type="text" id="insurance-claims" />
+  <br />
+  <button id="submit-transaction">Submit Transaction</button>
+</form>
+
+<script>
+  const submitTransactionButton = document.getElementById('submit-transaction');
+  submitTransactionButton.addEventListener('click', async () => {
+    const patientName = document.getElementById('patient-name').value;
+    const billingDetails = document.getElementById('billing-details').value;
+    const insuranceClaims = document.getElementById('insurance-claims').value;
+    // Call API to submit transaction
+    await fetch('/submit-transaction', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patientName, billingDetails, insuranceClaims }),
+    });
+  });
+</script>

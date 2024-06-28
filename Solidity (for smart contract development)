@@ -1,0 +1,17 @@
+// BlockchainNetwork.sol
+pragma solidity ^0.8.0;
+
+contract BlockchainNetwork {
+  struct Transaction {
+    string patientName;
+    string billingDetails;
+    string insuranceClaims;
+  }
+
+  mapping (address => Transaction[]) public transactions;
+
+  function recordTransaction(string memory _patientName, string memory _billingDetails, string memory _insuranceClaims) public {
+    Transaction memory newTransaction = Transaction(_patientName, _billingDetails, _insuranceClaims);
+    transactions[msg.sender].push(newTransaction);
+  }
+}

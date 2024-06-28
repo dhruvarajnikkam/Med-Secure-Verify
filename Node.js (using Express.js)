@@ -1,0 +1,30 @@
+// transaction-interface.js
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/submit-transaction', async (req, res) => {
+  const { patientName, billingDetails, insuranceClaims } = req.body;
+  // Call AI validation engine API
+  const validationResult = await fetch(`https://ai-validation-engine.com/validate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ patientName, billingDetails, insuranceClaims }),
+  });
+  if (validationResult.ok) {
+    // Record transaction in blockchain
+    await fetch(`https://blockchain-network.com/record-transaction`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patientName, billingDetails, insuranceClaims }),
+    });
+    res.status(201).send('Transaction submitted successfully!');
+  } else {
+    res.status(400).send('Transaction validation failed!');
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Transaction interface listening on port 3000');
+});

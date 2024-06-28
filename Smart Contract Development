@@ -1,0 +1,9 @@
+async createTransaction(ctx, transactionId, data) {
+    const transaction = {
+        transactionId,
+        data,
+        timestamp: new Date().toISOString()
+    };
+    await ctx.stub.putState(transactionId, Buffer.from(JSON.stringify(transaction)));
+    console.info(`Transaction ${transactionId} initialized`);
+}
