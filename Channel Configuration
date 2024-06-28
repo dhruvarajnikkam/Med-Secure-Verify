@@ -1,0 +1,29 @@
+---
+Channel: healthcare-channel
+Orderer:
+  <<: *Orderer
+  Organizations:
+    - *Org1
+  Capabilities:
+    <<: *ChannelCapabilities
+---
+Orderer: &Orderer
+  Type: etcdraft
+  Addresses:
+    - orderer.example.com:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+---
+Org1: &Org1
+  Name: Org1MSP
+  ID: Org1MSP
+  MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+  AnchorPeers:
+    - Host: peer0.org1.example.com
+      Port: 7051
+---
+ChannelCapabilities: &ChannelCapabilities
+  V2_0: true
